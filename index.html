@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BudgetBuddy | Personal Expense Tracker</title>
+    <!-- FontAwesome Icons & Google Fonts -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Link to CSS -->
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="app-container glass">
+
+    <aside class="sidebar">
+        <div class="logo">
+            <h2><i class="fa-solid fa-wallet"></i>BudgetBuddy</h2>
+        </div>
+        <nav>
+            <button class="nav-btn active" data-tab="dashboard"><i class="fa-solid fa-chart-pie"></i>Dashboard</button>
+            <button class="nav-btn" data-tab="transactions"><i class="fa-solid fa-money-bill-transfer"></i>Transactions</button>
+            <button class="nav-btn" data-tab="history"><i class="fa-solid fa-clock-history"></i>History</button>
+            <button class="nav-btn" data-tab="analytics"><i class="fa-solid fa-chart-line"></i>Analytics</button>
+            <button class="nav-btn" data-tab="tools"><i class="fa-solid fa-screwdriver-wrench"></i>Finance Tools</button>
+        </nav>
+    </aside>
+
+    <main class="content">
+
+        <section id="dashboard" class="tab-content active">
+            <h1>Dashboard Overview</h1>
+            <div class="quote-card glass-panel">
+                <p id="quote-text"><i class="fa-solid fa-quote-left"></i> Saving money today creates a better tomorrow.</p>
+            </div>
+
+            <div class="summary-cards">
+                <div class="card glass-panel">
+                    <h3><i class="fa-solid fa-scale-balanced" style="color: var(--primary);"></i> Available Balance</h3>
+                    <p id="total-balance">₹0.00</p>
+                </div>
+                <div class="card glass-panel income-card">
+                    <h3><i class="fa-solid fa-arrow-trend-up"></i> Total Income</h3>
+                    <p id="total-income">₹0.00</p>
+                </div>
+                <div class="card glass-panel expense-card">
+                    <h3><i class="fa-solid fa-arrow-trend-down"></i> Total Expenses</h3>
+                    <p id="total-expense">₹0.00</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="transactions" class="tab-content">
+            <h1>Manage Transactions</h1>
+            <div class="transactions-container">
+                <form id="transaction-form" class="glass-panel">
+                    <h3><i class="fa-solid fa-square-plus" style="color: var(--primary);"></i> Add New Entry</h3>
+
+                    <div class="form-group">
+                        <label>Description</label>
+                        <input type="text" id="trans-text" placeholder="e.g., College Stipend, Books" required autocomplete="off">
+                    </div>
+
+                    <div class="form-group">
+                        <label>Amount (₹)</label>
+                        <input type="number" id="trans-amount" placeholder="0.00" min="0.01" step="0.01" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Category</label>
+                        <select id="trans-category">
+                            <option value="Salary">Salary / Stipend</option>
+                            <option value="Food">Food & Dining</option>
+                            <option value="Transport">Transport & Fuel</option>
+                            <option value="Shopping">Shopping & Lifestyle</option>
+                            <option value="Bills">Bills & Utilities</option>
+                            <option value="Other">Other Expenses</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Type</label>
+                        <select id="trans-type">
+                            <option value="income">Income (+)</option>
+                            <option value="expense">Expense (-)</option>
+                        </select>
+                    </div>
+
+                    <button class="btn" type="submit"><i class="fa-solid fa-plus"></i> Add Transaction</button>
+                </form>
+
+                <div class="glass-panel">
+                    <h3><i class="fa-solid fa-list-check" style="color: var(--primary);"></i> Recent Activity</h3>
+                    <ul id="recent-list" class="transaction-list"></ul>
+                </div>
+            </div>
+        </section>
+
+        <section id="history" class="tab-content">
+            <h1>Transaction History Ledger</h1>
+            <div class="glass-panel table-wrapper">
+                <table class="history-table">
+                    <thead>
+                        <tr>
+                            <th>Description</th>
+                            <th>Category</th>
+                            <th>Type</th>
+                            <th>Amount</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody id="history-body"></tbody>
+                </table>
+            </div>
+        </section>
+
+        <section id="analytics" class="tab-content">
+            <h1>Expense Analytics</h1>
+            <div class="glass-panel">
+                <h3><i class="fa-solid fa-chart-bar" style="color: var(--primary);"></i> Category-wise Expenses</h3>
+                <div id="analytics-bars" class="analytics-grid"></div>
+            </div>
+        </section>
+
+        <section id="tools" class="tab-content">
+            <h1>Financial Calculators</h1>
+            <div class="tools-grid">
+                <!-- GST Calculator -->
+                <div class="glass-panel converter-container">
+                    <h3><i class="fa-solid fa-percent" style="color: var(--primary);"></i> GST Calculator</h3>
+                    <div class="form-group">
+                        <label>Base Amount (₹)</label>
+                        <input type="number" id="gst-amount" placeholder="Enter Base Amount">
+                    </div>
+                    <div class="form-group">
+                        <label>GST Rate</label>
+                        <select id="gst-rate">
+                            <option value="5">5% (Essentials)</option>
+                            <option value="12">12% (Standard)</option>
+                            <option value="18" selected>18% (Services/General)</option>
+                            <option value="28">28% (Luxury)</option>
+                        </select>
+                    </div>
+                    <button id="gst-btn" class="btn"><i class="fa-solid fa-calculator"></i> Calculate GST</button>
+                    <div class="conversion-result">
+                        <p id="gst-result">Enter details to calculate GST.</p>
+                    </div>
+                </div>
+
+                <div class="glass-panel converter-container">
+                    <h3><i class="fa-solid fa-house-laptop" style="color: var(--primary);"></i> Loan EMI Calculator</h3>
+                    <div class="form-group">
+                        <label>Loan Amount (₹)</label>
+                        <input type="number" id="loan-amount" placeholder="Enter Loan Amount">
+                    </div>
+                    <div class="form-group">
+                        <label>Interest Rate (% Per Year)</label>
+                        <input type="number" id="loan-rate" placeholder="e.g., 8.5" step="0.1">
+                    </div>
+                    <div class="form-group">
+                        <label>Tenure (Months)</label>
+                        <input type="number" id="loan-months" placeholder="e.g., 12">
+                    </div>
+                    <button id="emi-btn" class="btn"><i class="fa-solid fa-calculator"></i> Calculate EMI</button>
+                    <div class="conversion-result">
+                        <p id="emi-result">Enter details to calculate monthly EMI.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+</div>
+<script src="script.js"></script>
+</body>
+</html>
